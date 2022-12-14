@@ -1,0 +1,69 @@
+@use '../../variables/colors.scss' as *;
+
+.dice-panel {
+   background-color: $liteGrey;
+   display: flex;
+   flex-direction: row;
+
+
+   &__item {
+      flex: 1 2 auto;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &::after {
+         content: '';
+         position: absolute;
+         right: 0;
+         top: 20%;
+         height: 60%;
+         width: 1px;
+         background-color: $darkGrey;
+
+      }
+   }
+
+   &__item:nth-child(2) {
+      flex-direction: column;
+      flex: 5 1 auto;
+      justify-content: center;
+      gap: 5px;
+
+   }
+
+   &__item:last-child::after {
+      display: none;
+   }
+
+   &__system {
+      position: relative;
+      display: flex;
+      flex: 1;
+      align-items: center;
+
+      &::after {
+         content: '';
+         position: absolute;
+         bottom: 0;
+         left: 15%;
+         width: 70%;
+         height: 1px;
+         background-color: $darkGrey;
+      }
+   }
+
+   &__board {
+      display: flex;
+      gap: 20px;
+      flex: 1;
+      align-items: center;
+   }
+
+   &__empty {
+      display: flex;
+      flex: 1
+   }
+
+}

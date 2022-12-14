@@ -1,0 +1,57 @@
+.big-dice {
+   width: 60px;
+   height: 60px;
+   background-color: brown;
+   border-radius: 15%;
+   position: relative;
+
+   @media (max-width: 768px) {
+      width: 45px;
+      height: 45px;
+   }
+
+   &--empty {
+      img {
+         display: none;
+      }
+   }
+
+   .dice__number {
+      font-size: 2.2rem;
+   }
+
+
+   &--animated {
+      animation: rolling 0.5s infinite;
+   }
+}
+
+@keyframes rolling {
+   0% {
+      transform: translate(0, 0) rotateZ(0);
+   }
+
+   15% {
+      transform: translate(0, -5px) rotateZ(60deg);
+   }
+
+   30% {
+      transform: translate(-3px, -3px) rotateZ(120deg);
+   }
+
+   50% {
+      transform: translate(-7px, 0) rotateZ(180deg);
+   }
+
+   65% {
+      transform: translate(0px, 5px) rotateZ(240deg);
+   }
+
+   80% {
+      transform: translate(3px, 3px) rotateZ(300deg);
+   }
+
+   100% {
+      transform: translate(0, 0) rotateZ(360deg);
+   }
+}

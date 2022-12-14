@@ -1,0 +1,44 @@
+@use '../../variables/colors.scss' as *;
+@use '../common/mixins/vh.scss' as *;
+
+.log {
+   height: 100%;
+   background-color: $white;
+   grid-row: 1/4;
+
+   position: relative;
+
+
+   &__title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @include vh(6);
+      padding: 10px;
+      background-color: $roll-button;
+   }
+
+   &__box {
+      display: flex;
+      flex-direction: column-reverse;
+
+      @include vh(82);
+      overflow-y: auto;
+
+      padding: 10px;
+
+   }
+
+
+   // min-height: calc(var(--vh) * 90);
+
+   @media (max-width: 768px) {
+      grid-row: 4;
+   }
+
+
+
+
+
+
+}

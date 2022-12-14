@@ -1,0 +1,64 @@
+$black: #302D40;
+$darkGrey: #373737;
+$middleGrey: #CBCACA;
+$liteGrey: #E4E4E4;
+$white: #F3F2F2;
+$stat-button: #9CB498;
+$roll-button: #8B85AE;
+
+
+$dice-brown: #7C6D62;
+$dice-violet: #816987;
+$dice-red: #874142;
+$dice-green: #A0BA93;
+$dice-blue: #8FB9D6;
+$dice-yellow: #E3C676;
+$dice-border: #978d8d;
+$dice-grey: #4b4645;
+
+$status-success: #94ce86;
+$status-advant: #b9c581;
+$status-neutral: #dbdb89;
+$status-trouble: #c5a279;
+$status-failure: #d48d8d;
+
+.dice--white {
+   background-color: rgb(243, 229, 208);
+   border: 1px solid $dice-border;
+}
+
+.dice--green {
+   background-color: $dice-green;
+   border: 1px solid $dice-border;
+}
+
+.dice--blue {
+   background-color: $dice-blue;
+   border: 1px solid $dice-border;
+}
+
+.dice--yellow {
+   background-color: $dice-yellow;
+   border: 1px solid $dice-border;
+}
+
+.dice--brown {
+   background-color: $dice-brown;
+   border: 1px solid $dice-border;
+}
+
+.dice--violet {
+   background-color: $dice-violet;
+   border: 1px solid $dice-border;
+}
+
+.dice--red {
+   background-color: $dice-red;
+   border: 1px solid $dice-border;
+}
+
+.dice--grey {
+   background-color: $dice-grey;
+   border: 1px solid $dice-grey;
+   color: $white;
+}

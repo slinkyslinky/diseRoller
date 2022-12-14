@@ -1,0 +1,24 @@
+@use '../../variables/colors.scss' as *;
+
+
+.big-button {
+   flex: 1 1 auto;
+   height: 100%;
+   background-color: $roll-button;
+   color: $white;
+   padding: 15px;
+   text-transform: uppercase;
+   position: relative;
+   z-index: 1;
+
+}
+
+.big-button--roll {
+   background-color: $roll-button;
+
+}
+
+.big-button--statistic {
+   background-color: $stat-button;
+
+}

@@ -1,0 +1,11 @@
+@use '../mixins/vh.scss' as *;
+@use '../../../variables/colors.scss' as *;
+
+footer {
+
+
+   width: 100%;
+   @include vh(5);
+   background-color: $darkGrey;
+
+}

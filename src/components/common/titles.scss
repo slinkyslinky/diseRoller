@@ -1,0 +1,13 @@
+@use '../common/mixins/vh.scss' as *;
+
+h1 {
+   margin: 0;
+   font-size: calc(var(--vh)*3.5)
+}
+
+h2 {
+   margin: 0;
+   font-size: calc(var(--vh)*2.5);
+
+
+}

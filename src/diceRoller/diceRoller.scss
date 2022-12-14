@@ -1,0 +1,29 @@
+@use '../components/common/mixins/vh.scss' as *;
+@use '../variables/colors.scss' as *;
+
+
+.dice-roller {
+
+   background: linear-gradient(270.25deg, $darkGrey 5.04%, #656370 47.66%, $darkGrey 96.85%);
+   @include vh(90);
+
+   height: 100%;
+
+   &__item:first-child {
+      flex: 1.5 1 auto;
+      display: flex;
+      flex-direction: column;
+   }
+
+   &__item:last-child {
+      flex: 1 1 auto;
+
+
+   }
+
+   @media (min-height:1200px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+}

@@ -1,0 +1,42 @@
+@use './mixins/vh.scss' as *;
+@use '../../variables/colors.scss' as *;
+
+.container {
+   max-width: 1200px;
+   height: 100%;
+   width: 100%;
+
+
+   margin: 0 auto;
+   display: grid;
+   grid-template-columns: 1.5fr 1fr;
+   grid-template-rows: 1fr 4fr 1.5fr;
+   gap: 1px;
+
+
+   @include vh(90);
+
+   background-color: $darkGrey;
+
+
+
+
+   @media (max-width: 1000px) {
+      grid-template-columns: 2fr 1fr;
+   }
+
+   @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 4fr 1fr 1.5fr;
+   }
+
+   @media (max-height: 640px) {
+      grid-template-rows: 1fr 4fr 1fr 0.4fr;
+   }
+
+   @media (min-height: 1200px) {
+      height: 1000px;
+      min-height: auto;
+   }
+
+}
