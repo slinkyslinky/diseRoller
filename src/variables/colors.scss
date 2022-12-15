@@ -8,13 +8,19 @@ $roll-button: #8B85AE;
 
 
 $dice-brown: #7C6D62;
+$stroke-brown: #504741;
 $dice-violet: #816987;
+$stroke-violet: #493b4d;
 $dice-red: #874142;
+$stroke-red: #572e2e;
 $dice-green: #A0BA93;
+$stroke-green: #53634b;
 $dice-blue: #8FB9D6;
+$stroke-blue: #678092;
 $dice-yellow: #E3C676;
-$dice-border: #978d8d;
+$stroke-yellow: #9e843e;
 $dice-grey: #4b4645;
+$stroke-grey: #383534;
 
 $status-success: #94ce86;
 $status-advant: #b9c581;
@@ -23,42 +29,42 @@ $status-trouble: #c5a279;
 $status-failure: #d48d8d;
 
 .dice--white {
-   background-color: rgb(243, 229, 208);
-   border: 1px solid $dice-border;
+   fill: rgb(243, 229, 208);
+   stroke: $stroke-grey
 }
 
 .dice--green {
-   background-color: $dice-green;
-   border: 1px solid $dice-border;
+   fill: $dice-green;
+   stroke: $stroke-green
 }
 
 .dice--blue {
-   background-color: $dice-blue;
-   border: 1px solid $dice-border;
+   fill: $dice-blue;
+   stroke: $stroke-blue
 }
 
 .dice--yellow {
-   background-color: $dice-yellow;
-   border: 1px solid $dice-border;
+   fill: $dice-yellow;
+   stroke: $stroke-yellow
 }
 
 .dice--brown {
-   background-color: $dice-brown;
-   border: 1px solid $dice-border;
+   fill: $dice-brown;
+   stroke: $stroke-brown
 }
 
 .dice--violet {
-   background-color: $dice-violet;
-   border: 1px solid $dice-border;
+   fill: $dice-violet;
+   stroke: $stroke-violet
 }
 
 .dice--red {
-   background-color: $dice-red;
-   border: 1px solid $dice-border;
+   fill: $dice-red;
+   stroke: $stroke-red
 }
 
 .dice--grey {
    background-color: $dice-grey;
-   border: 1px solid $dice-grey;
+   border: 1px solid $stroke-grey;
    color: $white;
 }

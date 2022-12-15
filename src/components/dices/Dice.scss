@@ -1,13 +1,43 @@
+.dice {
+   position: relative;
+   background: none;
+   width: auto;
+   height: min-content;
+
+
+   img,
+   .dice__number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+   }
+}
+
+
+.little-dice {
+   width: 30px;
+   height: 30px;
+
+
+
+   @media (max-width: 768px) {
+      width: 20px;
+      height: 20px;
+   }
+}
+
+
+
 .big-dice {
-   width: 60px;
-   height: 60px;
-   background-color: brown;
-   border-radius: 15%;
+   width: 80px;
+   height: 80px;
+
    position: relative;
 
    @media (max-width: 768px) {
-      width: 45px;
-      height: 45px;
+      width: 60px;
+      height: 60px;
    }
 
    &--empty {
@@ -17,16 +47,22 @@
    }
 
    .dice__number {
-      font-size: 2.2rem;
+      font-size: 2rem;
    }
 
 
    &--animated {
       animation: rolling 0.5s infinite;
+
+      img,
+      .dice__number {
+         display: none
+      }
    }
 }
 
 @keyframes rolling {
+
    0% {
       transform: translate(0, 0) rotateZ(0);
    }

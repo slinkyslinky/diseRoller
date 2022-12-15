@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { DOMElement } from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import DicePanel from '../components/dicePanel/DicePanel';
@@ -67,6 +67,8 @@ export default function DiceRoller() {
          array.sort((a, b) => { return a.queue - b.queue })
          setPool(array)
          resetResultOfRoll()
+         console.log(pool);
+
       }
 
    }
@@ -107,10 +109,16 @@ export default function DiceRoller() {
       function toggleAnimation() {
          let field = document.getElementById("dice-pool__field")
          if (field !== null) {
-            const dicesInField = field.children
+            const dicesInField = Array.from(field.children)
             for (let item in dicesInField) {
-               const random = Math.trunc(Math.random() * 3) + 1
-               dicesInField[item].classList?.toggle("big-dice--animated")
+
+               const dice = dicesInField[item]
+               dice.classList?.toggle("big-dice--animated")
+               dice.setAttribute("style", `animation-delay: .${Math.round(Math.random() * 3)}s`)
+
+
+
+
             }
          }
 
@@ -132,7 +140,7 @@ export default function DiceRoller() {
 
             setResultOfRoll(data)
             setLogList([...logList, { data, pool }])
-            setTimeout(toggleAnimation, 100)
+            setTimeout(toggleAnimation, 300)
             for (let i = 0; i < pool.length; i++) {
                pool[i].value = data.pool[i]
             }

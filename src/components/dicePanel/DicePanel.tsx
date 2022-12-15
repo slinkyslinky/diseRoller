@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import LittleButton from '../buttons/LittleButton';
-import LittleDice from '../dices/LittleDice'
+
 import './DicePanel.scss'
 import Gear from '../../svg/Gear'
 import Star from '../../svg/Star'
@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import { useState } from 'react'
 import { serverURL } from '../../variables/config.js'
 import { Dice, System } from '../../types/types';
+import DiceComponent from '../dices/DiceComponent';
 
 type Props = {
    systems: System[],
@@ -46,7 +47,7 @@ export default function DicePanel({ systems, system, setSystem, diceBoard, addTo
             <div className="dice-panel__board">
                {diceBoard.map((dice: Dice) => {
                   i++;
-                  return <LittleDice dice={dice} onClick={addToPool} key={i} />
+                  return <DiceComponent dice={dice} size={"little"} onClick={addToPool} key={i} />
                })}
 
             </div>

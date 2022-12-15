@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import LittleButton from '../buttons/LittleButton'
-import BigDice from '../dices/BigDice'
+
 import './DicePool.scss'
 import Close from '../../svg/Close'
 
@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import { useEffect } from 'react'
 import { getImg } from '../../utils/getImg.js'
 import { Dice, System } from '../../types/types'
+import DiceComponent from '../dices/DiceComponent'
 
 type Props = {
    system: System,
@@ -82,7 +83,7 @@ export default function DicePool({ system, pool, removeFromPool, clearPool, resu
 
             {pool.map((dice: Dice) => {
                i++
-               return <BigDice system={system} key={dice.order} dice={dice} onClick={removeFromPool} onRightClick={reroll} />
+               return <DiceComponent system={system} key={dice.order} dice={dice} onClick={removeFromPool} onRightClick={reroll} />
             }
             )
             }
