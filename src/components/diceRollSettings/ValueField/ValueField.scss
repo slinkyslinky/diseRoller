@@ -1,0 +1,28 @@
+@use '../../../variables/colors.scss' as *;
+
+
+.value-field {
+
+   position: relative;
+   display: flex;
+   width: fit-content;
+   flex-direction: row;
+   align-items: center;
+   gap: 5px;
+   padding: 10px;
+
+
+   &::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: 0;
+      height: 60%;
+      width: 1px;
+      background-color: $black;
+   }
+
+   &:last-child::after {
+      display: none;
+   }
+}

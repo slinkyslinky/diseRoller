@@ -1,0 +1,31 @@
+@use '../../../variables/colors.scss' as *;
+
+
+.settings {
+   display: flex;
+
+   flex-direction: column;
+   min-width: 50%;
+   color: $black;
+   text-align: center;
+   background-color: $liteGreen;
+   border-right: 1px solid $black;
+
+   h4 {
+      color: $white;
+      display: block;
+      margin: 0;
+      padding: 10px 5px;
+      background-color: $green;
+      font-size: 1.1rem;
+      font-weight: 300;
+      text-transform: uppercase;
+   }
+
+   &__values {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+   }
+}

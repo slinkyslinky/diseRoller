@@ -36,7 +36,7 @@ export default function DiceComponent({ dice, size, onClick, onRightClick, syste
                {getForm(getDiceForm(dice.weight))}
 
             </svg>
-            {getImg(dice.value, system)}
+            {getImg(dice.value, system?.name)}
          </button>
       )
    }

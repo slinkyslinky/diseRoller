@@ -14,18 +14,18 @@ import DiceComponent from '../dices/DiceComponent';
 type Props = {
    systems: System[],
    system: System,
-   setSystem: any,
+   getSystem: any,
    diceBoard: Dice[],
    addToPool: (dice: Dice) => void,
    clearPool: any,
 }
 
 
-export default function DicePanel({ systems, system, setSystem, diceBoard, addToPool, clearPool, }: Props) {
+export default function DicePanel({ systems, system, getSystem, diceBoard, addToPool, clearPool, }: Props) {
 
 
    function chooseSystem(system: System, modal: any) {
-      setSystem(system)
+      getSystem(system)
       showModal(modal)
       clearPool()
    }
@@ -43,7 +43,7 @@ export default function DicePanel({ systems, system, setSystem, diceBoard, addTo
             <LittleButton img={<Star />} onClick={showModal} modal='' />
          </div>
          <div className="dice-panel__item ">
-            <span className="dice-panel__system">{system}</span>
+            <span className="dice-panel__system">{system.name}</span>
             <div className="dice-panel__board">
                {diceBoard.map((dice: Dice) => {
                   i++;

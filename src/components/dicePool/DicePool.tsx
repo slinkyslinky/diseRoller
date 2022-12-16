@@ -98,7 +98,7 @@ export default function DicePool({ system, pool, removeFromPool, clearPool, resu
                      if (item != 'Empty') {
                         j++;
 
-                        return <div key={j} className='result-dice dice--grey'>{getImg(item, system)}</div>
+                        return <div key={j} className='result-dice dice--grey'>{getImg(item, system.name)}</div>
                      } else return 'Empty';
 
                   })}

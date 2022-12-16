@@ -1,3 +1,5 @@
+
+import { resolve } from 'path';
 import React, { DOMElement } from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -14,8 +16,14 @@ export default function DiceRoller() {
 
 
    const [systems, setSystems] = useState<System[]>([])
-   const [system, setSystem] = useState<System>('No System')
-   const [diceBoard, setDiceBoard] = useState<Pool>([])
+   const [system, setSystem] = useState<System>({
+      name: "No System",
+      settings: [],
+      dice: []
+   })
+
+   const [rollAmount, setRollAmount] = useState(1)
+   const [requestStatus, setRequestStatus] = useState('')
    const [pool, setPool] = useState<Pool>([])
    const [resultOfRoll, setResultOfRoll] = useState<any>({
       pool: [],
@@ -23,24 +31,6 @@ export default function DiceRoller() {
       status: ''
    })
    const [logList, setLogList] = useState<any>([])
-
-
-
-   useEffect(() => {
-      fetch(serverURL + 'files/' + system + 'Dice')
-
-         .then(response => response.json())
-         .then(dices => (setDiceBoard([...dices])))
-         .catch(() => setDiceBoard([]))
-
-      // fetch(serverURL + '/files/' + system + 'Img')
-      //    .then(response => response.json())
-      //    .then(images => console.log(images))
-      setLogList([])
-   }, [system])
-
-
-
 
    useEffect(() => {
       fetch(serverURL + 'files/systemsList')
@@ -50,6 +40,32 @@ export default function DiceRoller() {
       // .catch(setSystems(["Server Error"]))
 
    }, [])
+
+
+   function getSystem(system: System) {
+
+
+      fetch(serverURL + 'files/' + system + 'System')
+
+         .then(response => response.json())
+         .then(data => {
+
+
+            setSystem(data)
+         })
+         .catch(() => setSystem({ name: "Error", settings: [], dice: [] }))
+
+      // fetch(serverURL + '/files/' + system + 'Img')
+      //    .then(response => response.json())
+      //    .then(images => console.log(images))
+      setLogList([])
+   }
+
+
+
+
+
+
 
    function resetResultOfRoll() {
       setResultOfRoll({
@@ -89,63 +105,78 @@ export default function DiceRoller() {
       resetResultOfRoll()
 
    }
-   function roll(pool: Pool) {
-      // let count = 0;
-      // const list = []
-      // const arrayOfEdges = ["success", "trouble", "advant", "failutre", "crit", "miscrit"]
-      // const rollAnimation = setInterval(() => {
-      //    if (count === arrayOfEdges.length) { count = 0 }
-      //    for (let key in pool) {
-      //       list.push(arrayOfEdges[count])
-      //    }
+   function roll(e: Event, pool: Pool) {
 
-      //    setResultOfRoll(
-      //       { pool: list }
-      //    )
+      toggleAnimation("start")
+      resetResultOfRoll()
+      const logging: any = []
+      let i = 0;
+      getRollRequest()
 
 
-      //    count++
-      // }, 200)
-      function toggleAnimation() {
+      function getRollRequest() {
+         if (i !== rollAmount) {
+            setRequestStatus('pending')
+            fetch(serverURL + 'functions/roll', {
+               method: "POST",
+               headers: {
+                  'Content-Type': 'application/json',
+               },
+               body: JSON.stringify(pool)
+            })
+               .then(response => response.json())
+               .then((data) => {
+
+                  setResultOfRoll(data)
+                  logging.push({ data, pool })
+                  setLogList([...logList, ...logging])
+
+                  for (let i = 0; i < pool.length; i++) {
+                     pool[i].value = data.pool[i]
+                  }
+               })
+               .then(() => {
+                  console.log('workd');
+
+                  i++
+                  setTimeout(() => getRollRequest(), 500)
+               })
+         } else {
+            setTimeout(() => toggleAnimation("end"), 0)
+            setRequestStatus('compete')
+         }
+
+      }
+
+
+
+
+      function toggleAnimation(isStart: "start" | "end") {
          let field = document.getElementById("dice-pool__field")
          if (field !== null) {
             const dicesInField = Array.from(field.children)
-            for (let item in dicesInField) {
+            if (isStart === "start") {
 
-               const dice = dicesInField[item]
-               dice.classList?.toggle("big-dice--animated")
-               dice.setAttribute("style", `animation-delay: .${Math.round(Math.random() * 3)}s`)
-
-
-
+               for (let item in dicesInField) {
+                  const dice = dicesInField[item]
+                  dice.classList.add("big-dice--animated")
+                  dice.setAttribute("style", `animation-delay: .${Math.round(Math.random() * 3)}s`)
+               }
+            } else {
+               for (let item in dicesInField) {
+                  const dice = dicesInField[item]
+                  dice.classList.remove("big-dice--animated")
+               }
 
             }
          }
-
-
       }
-      toggleAnimation()
-      resetResultOfRoll()
-
-      fetch(serverURL + 'functions/roll', {
-         method: "POST",
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(pool)
-      })
-         .then(response => response.json())
-         .then((data) => {
-            // clearInterval(rollAnimation)
-
-            setResultOfRoll(data)
-            setLogList([...logList, { data, pool }])
-            setTimeout(toggleAnimation, 300)
-            for (let i = 0; i < pool.length; i++) {
-               pool[i].value = data.pool[i]
-            }
-         })
    }
+
+
+
+
+
 
    function reroll(target: any) {
       const numberOfDice = target.getAttribute("data-number") - 1;
@@ -195,9 +226,9 @@ export default function DiceRoller() {
       <main className='dice-roller' >
          <div className="container">
 
-            <DicePanel systems={systems} system={system} setSystem={setSystem} diceBoard={diceBoard} addToPool={addToPool} clearPool={clearPool} />
+            <DicePanel systems={systems} system={system} getSystem={getSystem} diceBoard={system.dice} addToPool={addToPool} clearPool={clearPool} />
             <DicePool system={system} removeFromPool={removeFromPool} clearPool={clearPool} pool={pool} resultOfRoll={resultOfRoll} reroll={reroll} />
-            <DiceRollSettings pool={pool} roll={roll} getStatistic={getStatistic} />
+            <DiceRollSettings pool={pool} roll={roll} getStatistic={getStatistic} requestStatus={requestStatus} rollAmount={rollAmount} setRollAmount={setRollAmount} />
             <Log system={system} logList={logList} setLogList={setLogList} />
 
 

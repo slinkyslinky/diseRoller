@@ -1,0 +1,10 @@
+.counter {
+   width: 30px;
+   display: flex;
+   flex-direction: column;
+
+   &__value {
+      cursor: pointer;
+      user-select: none;
+   }
+}

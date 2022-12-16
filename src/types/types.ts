@@ -9,5 +9,15 @@ export type Dice = {
 }
 export type Pool = Dice[]
 
-export type System = string
+export type System = {
+   name: string,
+   settings: Setting[],
+   dice: Pool,
+   images?: any
+}
+
+export type Setting = {
+   name: string,
+   type: "number" | "string"
+}
 

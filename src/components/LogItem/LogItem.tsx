@@ -53,7 +53,7 @@ export default function LogItem({ id, result, system }: Props) {
       <div className='log__item' onClick={(e: any) => openInfo()}>
          <div>{id}: </div>
          {/* <div className='log__block'><span>P: </span>{pool.map(item => getImg(item))}</div> */}
-         <div className='log__block'>{result.map((item: any) => { i++; return <div key={i} className="log__dice dice--grey">{getImg(item, system)} </div> })}</div>
+         <div className='log__block'>{result.map((item: any) => { i++; return <div key={i} className="log__dice dice--grey">{getImg(item, system.name)} </div> })}</div>
          <div>{writeStatus(result)}</div>
          <LogRollInfo isOpen={isOpen} />
       </div>
