@@ -1,4 +1,6 @@
 import React from 'react'
+import { useAppDispatch } from '../../hooks/hooks'
+import { fetchRoll } from '../../store/rollSlice'
 import BigButton from '../buttons/BigButton'
 
 import './DiceRollSettings.scss'
@@ -14,11 +16,14 @@ type Props = {
 }
 
 export default function DiceRollSettings({ pool, roll, requestStatus, setRollAmount, rollAmount }: Props) {
+
+   const dispatch = useAppDispatch()
+
    return (
       <div className='dice-roll-settings'>
 
-         <SettingsField setRollAmount={setRollAmount} rollAmount={rollAmount} />
-         <BigButton type='roll' pool={pool} onClick={roll} requestStatus={requestStatus} />
+         <SettingsField />
+         <BigButton type='roll' pool={pool} onClick={() => dispatch(fetchRoll())} />
       </div>
    )
 }

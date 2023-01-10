@@ -7,6 +7,12 @@
 @use './components/common/titles.scss';
 @use './components/common/attributes.scss' as *;
 
+
+html {
+   overflow-x: hidden;
+}
+
 .App {
-   @include vh(100)
+   @include vh(100);
+   overflow-x: hidden;
 }

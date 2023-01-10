@@ -3,18 +3,18 @@
 
 .container {
    max-width: 1200px;
-   height: 100%;
-   width: 100%;
 
+   width: 100%;
+   position: relative;
 
    margin: 0 auto;
    display: grid;
-   grid-template-columns: 1.5fr 1fr;
+   grid-template-columns: 65% 35%;
    grid-template-rows: 1fr 4fr 1.5fr;
    gap: 1px;
-
-
    @include vh(90);
+   transition: transform ease 0.5s;
+
 
    background-color: $darkGrey;
 
@@ -22,21 +22,32 @@
 
 
    @media (max-width: 1000px) {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 70% 30%;
    }
 
    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr 4fr 1fr 1.5fr;
+      grid-template-columns: calc(100% - 20px) calc(60% - 20px);
+      grid-template-rows: 1fr 4fr 1fr;
+      @include vh(100);
+
+      &--open-log {
+         transform: translateX(calc(-60% + 20px));
+
+      }
    }
 
-   @media (max-height: 640px) {
-      grid-template-rows: 1fr 4fr 1fr 0.4fr;
-   }
+
 
    @media (min-height: 1200px) {
       height: 1000px;
       min-height: auto;
    }
 
+   @media (max-height: 640px) {
+      grid-template-rows: 1fr 4fr 1fr;
+   }
+
+   @media (max-height: 445px) {
+      grid-template-rows: 1fr 5fr 0.7fr;
+   }
 }

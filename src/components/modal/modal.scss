@@ -5,7 +5,8 @@
    position: absolute;
    top: 20%;
    left: 70%;
-   width: 15vw;
+
+   min-width: fit-content;
    min-height: 50px;
    border-radius: 5px;
    background-color: rgba(0, 0, 0, 0.8);
@@ -20,6 +21,12 @@
    &__item:hover,
    &__item:focus {
       background-color: rgba($color: #fff, $alpha: 0.3);
+   }
+
+   @media (max-width: 768px) {
+      left: auto;
+      right: 80%;
+
    }
 
 }

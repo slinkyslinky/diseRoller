@@ -11,6 +11,11 @@
    position: relative;
    z-index: 1;
 
+
+   @media (max-height: 445px) {
+      padding: 5px;
+      font-size: 0.8rem;
+   }
 }
 
 .big-button--roll {
@@ -18,7 +23,7 @@
 
 }
 
-.big-button--statistic {
+.big-button--settings {
    background-color: $green;
 
 }

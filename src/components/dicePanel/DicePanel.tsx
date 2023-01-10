@@ -8,30 +8,41 @@ import Modal from '../modal/Modal'
 import { useRef } from 'react'
 import { useState } from 'react'
 import { serverURL } from '../../variables/config.js'
-import { Dice, System } from '../../types/types';
+import { Dice, System, SystemList } from '../../types/types';
 import DiceComponent from '../dices/DiceComponent';
+import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 
 type Props = {
-   systems: System[],
+
    system: System,
    getSystem: any,
    diceBoard: Dice[],
-   addToPool: (dice: Dice) => void,
+
    clearPool: any,
 }
 
 
-export default function DicePanel({ systems, system, getSystem, diceBoard, addToPool, clearPool, }: Props) {
+export default function DicePanel({ clearPool, }: Props) {
 
 
-   function chooseSystem(system: System, modal: any) {
-      getSystem(system)
-      showModal(modal)
-      clearPool()
-   }
+   const [isModalClosed, setIsModalClosed] = useState<boolean>(true)
+   const system = useAppSelector(state => state.systemReducer.systemData)
+   const diceBoard = system.dices || []
 
-   function showModal(modal: any) {
-      modal.current.classList.toggle('modal--closed')
+
+   function showModal() {
+      if (isModalClosed) {
+         setIsModalClosed(false)
+         setTimeout(() => {
+            window.addEventListener("click", closeModalHandler);
+         }, 1)
+      } else setIsModalClosed(true)
+
+      function closeModalHandler() {
+         setIsModalClosed(true)
+         window.removeEventListener("click", closeModalHandler)
+      }
    }
 
 
@@ -43,11 +54,11 @@ export default function DicePanel({ systems, system, getSystem, diceBoard, addTo
             <LittleButton img={<Star />} onClick={showModal} modal='' />
          </div>
          <div className="dice-panel__item ">
-            <span className="dice-panel__system">{system.name}</span>
+            <span className="dice-panel__system">{system.name || "No System"}</span>
             <div className="dice-panel__board">
                {diceBoard.map((dice: Dice) => {
                   i++;
-                  return <DiceComponent dice={dice} size={"little"} onClick={addToPool} key={i} />
+                  return <DiceComponent dice={dice} size={"little"} onClick={""} key={i} />
                })}
 
             </div>
@@ -56,7 +67,7 @@ export default function DicePanel({ systems, system, getSystem, diceBoard, addTo
          </div>
          <div className="dice-panel__item">
             <LittleButton img={<Gear />} modal={systemsRef} onClick={showModal} />
-            <Modal link={systemsRef} list={systems} onItemClick={chooseSystem} />
+            <Modal isClosed={isModalClosed} setIsClosed={setIsModalClosed} />
          </div>
       </div>
    )

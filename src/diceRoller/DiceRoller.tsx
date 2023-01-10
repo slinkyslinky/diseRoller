@@ -1,12 +1,15 @@
 
 import { resolve } from 'path';
-import React, { DOMElement } from 'react'
+import React, { DOMElement, useRef } from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import DicePanel from '../components/dicePanel/DicePanel';
 import DicePool from '../components/dicePool/DicePool';
 import DiceRollSettings from '../components/diceRollSettings/DiceRollSettings';
 import Log from '../components/Log/Log'
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { fetchSystemList } from '../store/systemSlice';
 import { Dice, Pool, System } from '../types/types';
 import { getImg } from '../utils/getImg';
 import { serverURL } from '../variables/config';
@@ -19,7 +22,7 @@ export default function DiceRoller() {
    const [system, setSystem] = useState<System>({
       name: "No System",
       settings: [],
-      dice: []
+      dices: []
    })
 
    const [rollAmount, setRollAmount] = useState(1)
@@ -31,33 +34,17 @@ export default function DiceRoller() {
       status: ''
    })
    const [logList, setLogList] = useState<any>([])
+   const dispatch = useAppDispatch()
+   const isLogOpen = useAppSelector(state => state.logReducer.isOpen)
+   const containerRef = useRef<HTMLDivElement>(null);
 
    useEffect(() => {
-      fetch(serverURL + 'files/systemsList')
-
-         .then(response => response.json())
-         .then(systemList => setSystems(systemList))
-      // .catch(setSystems(["Server Error"]))
-
+      dispatch(fetchSystemList())
    }, [])
 
 
    function getSystem(system: System) {
 
-
-      fetch(serverURL + 'files/' + system + 'System')
-
-         .then(response => response.json())
-         .then(data => {
-
-
-            setSystem(data)
-         })
-         .catch(() => setSystem({ name: "Error", settings: [], dice: [] }))
-
-      // fetch(serverURL + '/files/' + system + 'Img')
-      //    .then(response => response.json())
-      //    .then(images => console.log(images))
       setLogList([])
    }
 
@@ -75,19 +62,18 @@ export default function DiceRoller() {
       })
    }
 
-   function addToPool(dice: Dice): void {
-      if (pool.length < 18) {
-         const diceInPool = { ...dice }
-         let array = [...pool, diceInPool]
-         diceInPool.order = array.length
-         array.sort((a, b) => { return a.queue - b.queue })
-         setPool(array)
-         resetResultOfRoll()
-         console.log(pool);
+   // function addToPool(dice: Dice): void {
+   //    if (pool.length < 18) {
+   //       const diceInPool = { ...dice }
+   //       let array = [...pool, diceInPool]
+   //       diceInPool.order = array.length
+   //       array.sort((a, b) => { return a.queue - b.queue })
+   //       setPool(array)
+   //       resetResultOfRoll()
+   //       console.log(pool);
+   //    }
 
-      }
-
-   }
+   // }
    function removeFromPool(dice: Dice) {
 
       const index = pool.indexOf(dice)
@@ -222,16 +208,21 @@ export default function DiceRoller() {
          })
    }
 
+
+   if (isLogOpen && !containerRef.current?.classList.contains("container--open-log")) {
+      containerRef.current?.classList.add("container--open-log")
+   } else {
+      containerRef.current?.classList.remove("container--open-log")
+   }
+
    return (
       <main className='dice-roller' >
-         <div className="container">
+         <div ref={containerRef} className="container">
 
-            <DicePanel systems={systems} system={system} getSystem={getSystem} diceBoard={system.dice} addToPool={addToPool} clearPool={clearPool} />
-            <DicePool system={system} removeFromPool={removeFromPool} clearPool={clearPool} pool={pool} resultOfRoll={resultOfRoll} reroll={reroll} />
+            <DicePanel system={system} getSystem={getSystem} diceBoard={system.dices} clearPool={clearPool} />
+            <DicePool removeFromPool={removeFromPool} clearPool={clearPool} resultOfRoll={resultOfRoll} reroll={reroll} />
             <DiceRollSettings pool={pool} roll={roll} getStatistic={getStatistic} requestStatus={requestStatus} rollAmount={rollAmount} setRollAmount={setRollAmount} />
-            <Log system={system} logList={logList} setLogList={setLogList} />
-
-
+            <Log />
 
          </div>
       </main>

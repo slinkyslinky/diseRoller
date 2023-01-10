@@ -22,10 +22,36 @@
       text-transform: uppercase;
    }
 
+
+
    &__values {
       flex: 1 1 auto;
       display: flex;
       flex-direction: row;
       justify-content: center;
+
+
+   }
+
+   &__button {
+      display: none;
+
+   }
+}
+
+@media (max-width: 768px) {
+   .settings {
+
+      h4 {
+         display: none;
+      }
+
+      &__button {
+         display: block;
+      }
+
+      &__values {
+         display: none;
+      }
    }
 }

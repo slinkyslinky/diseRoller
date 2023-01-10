@@ -4,20 +4,25 @@ import LittleButton from '../buttons/LittleButton';
 import LogItem from '../LogItem/LogItem'
 import './Log.scss'
 import Close from '../../svg/Close'
-import { System } from '../../types/types';
-
-
-type Props = {
-   system: System,
-   logList: any,
-   setLogList: any,
-}
-export default function Log({ system, logList, setLogList }: Props) {
+import { ResultData, System } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { clearLog, toggleLog } from '../../store/logSlice';
 
 
 
+export default function Log() {
+
+   const logList = useAppSelector(state => state.logReducer.logList)
+   console.log(logList);
+
+   const dispatch = useAppDispatch()
+   const system = useAppSelector(state => state.systemReducer.systemData)
+   const isLogOpen = useAppSelector(state => state.logReducer.isOpen)
    const logBoxRef = useRef<HTMLDivElement>(null)
-   let i = 0;
+   const closeButtonRef = useRef<HTMLButtonElement>(null)
+
+   const maxLogSize = 30
+   let i = 0
 
 
    useEffect(() => {
@@ -35,26 +40,40 @@ export default function Log({ system, logList, setLogList }: Props) {
       }
 
    }
-   function clearLog() {
-      setLogList([])
+
+   let logClasses = 'log'
+
+   if (isLogOpen) {
+      logClasses += ' log--open'
    }
 
 
+
    return (
-      <div className='log' onClick={(e) => openInfo(e)}>
+      <div className={logClasses} onClick={(e) => openInfo(e)}>
+         <button ref={closeButtonRef} className="log__close-button"
+            onClick={() => {
+               dispatch(toggleLog())
+               closeButtonRef.current?.classList.toggle("log__close-button--open")
+            }
+            }> </button>
+
+
          <div className="log__title">
             <h2>Log</h2>
-            <LittleButton img={<Close />} onClick={() => { clearLog() }} modal={''} />
+            <LittleButton img={<Close />} onClick={() => dispatch(clearLog())} modal={''} />
          </div>
+
 
          <div ref={logBoxRef} className="log__box" >
             {
-
-               logList.map((logItem: any) => { i++; return <LogItem key={i} id={i} result={logItem.data.result} system={system} /> })
-
+               logList.map((result: ResultData) => {
+                  i++;
+                  if (logList.length - i > maxLogSize) return <></>
+                  return <LogItem key={i} id={i} resultData={result} system={system} />
+               })
             }
          </div>
-
       </div>
    )
 }

@@ -3,39 +3,64 @@ import { getImg } from '../../utils/getImg';
 import './LogItem.scss'
 import LogRollInfo from '../modal/logRollInfo/LogRollInfo';
 import { useRef } from 'react';
-import { System } from '../../types/types';
+import { ResultData, System } from '../../types/types';
 
 type Props = {
    id: number,
-   result: any,
+   resultData: ResultData,
    system: System,
 }
 
 
-export default function LogItem({ id, result, system }: Props) {
+export default function LogItem({ id, resultData, system }: Props) {
    let i = 0;
    let logInfoRef = useRef()
    const [isOpen, setIsOpen] = useState<boolean>(false);
+   const result = resultData.result
+   const resultStatus = resultData.status
+   let statusClass = ''
+   let statusText = ''
 
-   function writeStatus(result: any) {
 
-      if (result.includes("crit")) {
-         return "Crit Success!"
-      } else if (result.includes("success")) {
-         if (result.includes("advant")) {
-            return "Success with Advantage!"
-         } else if (!result.includes("trouble")) {
-            return "Success!"
-         } else {
-            return "Success with Trouble"
-         }
-      } else if (result.includes("miscrit")) {
-         return "Crit Failure!"
-      } else if (result.includes("advant")) {
-         return "Failure with Advantage"
-      } else if (typeof result[0] === "number") {
-         return ""
-      } else return "Failure"
+   function getStatus() {
+      console.log(resultStatus);
+      switch (resultStatus) {
+         case "crit":
+            statusClass = "status--success"
+            statusText = "Crit Success!"
+            break
+         case "success":
+            statusClass = "status--success"
+            statusText = "Success!"
+            break
+         case "advant":
+            statusClass = "status--advant"
+            statusText = "Advant"
+            break
+         case "success&advant":
+            statusClass = "status--success"
+            statusText = "Success with Advantage!"
+            break
+         case "success&trouble":
+            statusClass = "status--advant"
+            statusText = "Success with Trouble"
+            break
+         case "miscrit":
+            statusClass = "status--failure"
+            statusText = "Crit Failure!"
+            break
+         case "failure&trouble":
+            statusClass = "status--failure"
+            statusText = "Failure with trouble!"
+            break
+         case "failure":
+            statusClass = "status--failure"
+            statusText = "Failure!"
+            break
+         default:
+            break;
+      }
+
    }
 
    function openInfo() {
@@ -48,13 +73,14 @@ export default function LogItem({ id, result, system }: Props) {
 
    }
 
+   getStatus()
 
    return (
-      <div className='log__item' onClick={(e: any) => openInfo()}>
+      <div className={`log__item `} onClick={(e: any) => openInfo()}>
          <div>{id}: </div>
          {/* <div className='log__block'><span>P: </span>{pool.map(item => getImg(item))}</div> */}
-         <div className='log__block'>{result.map((item: any) => { i++; return <div key={i} className="log__dice dice--grey">{getImg(item, system.name)} </div> })}</div>
-         <div>{writeStatus(result)}</div>
+         <div className='log__block'>{result.map((item: any) => { i++; return <div key={i} className={`log__dice dice--grey`}>{getImg(item, system.name)} </div> })}</div>
+         <div className={statusClass} style={{ opacity: 0.8 }}>{statusText}</div>
          <LogRollInfo isOpen={isOpen} />
       </div>
    )

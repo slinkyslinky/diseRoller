@@ -5,17 +5,23 @@
    height: 100%;
    background-color: $white;
    grid-row: 1/4;
-
+   z-index: 5;
    position: relative;
+   transition: all ease 0.5s;
+
 
 
    &__title {
+      position: relative;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       @include vh(6);
-      padding: 10px;
+      padding: 10px 20px;
+      color: $white;
       background-color: $roll-button;
+
    }
 
    &__box {
@@ -27,18 +33,56 @@
 
       padding: 10px;
 
+      @media (max-width: 768px) {
+         @include vh(94);
+      }
+
    }
 
+   &__close-button {
+      position: absolute;
+      display: none;
+      width: 20px;
+
+      height: 100%;
+      z-index: 4;
+      background-color: $green;
+
+      &::after {
+         content: '';
+         position: absolute;
+         top: 50%;
+         left: 50%;
+
+         width: 10px;
+         height: 10px;
+         border-top: 2px solid $white;
+         border-left: 2px solid $white;
+         transform: translate(-30%, -50%) rotateZ(-45deg);
+      }
+
+      &--open {
+         &::after {
+            transform: translate(-70%, -50%) rotateZ(135deg);
+         }
+      }
+
+      @media (max-width: 768px) {
+         display: block;
+         left: -20px;
+      }
+   }
 
    // min-height: calc(var(--vh) * 90);
 
    @media (max-width: 768px) {
-      grid-row: 4;
+
+      // top: 5vh;
+
+      width: 100%;
+      @include vh(100);
+      border-left: 1px solid $darkGrey;
+      transform: translateX(0);
+      left: 20px;
    }
-
-
-
-
-
-
 }

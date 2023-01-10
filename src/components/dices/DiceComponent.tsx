@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react'
-import { Dice, System } from '../../types/types'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { addToPool, removeFromPool } from '../../store/rollSlice'
+import { Dice, ResultData, System } from '../../types/types'
 import { getDiceForm } from '../../utils/getDiceForm'
 import { getImg } from '../../utils/getImg'
 import './Dice.scss'
@@ -21,9 +23,18 @@ export default function DiceComponent({ dice, size, onClick, onRightClick, syste
       onRightClick(e.currentTarget)
    }
 
+   const dispatch = useAppDispatch()
+   const systemName = useAppSelector(state => state.systemReducer.systemData.name)
+   const resultData: ResultData = useAppSelector(state => state.rollReducer.resultData)
+   const isRolling = useAppSelector(state => state.rollReducer.isRolling)
+   const pool = resultData.pool
+
+
+
+
    if (size === "little") {
       return (
-         <button className={'dice little-dice'} onClick={() => onClick(dice)}>
+         <button className={'dice little-dice'} onClick={() => dispatch(addToPool(dice))}>
             <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                {getForm(getDiceForm(dice.weight))}
             </svg>
@@ -31,12 +42,12 @@ export default function DiceComponent({ dice, size, onClick, onRightClick, syste
       )
    } else {
       return (
-         <button className={'dice big-dice'} data-number={dice.order} onClick={() => onClick(dice)} onContextMenu={(e) => onContextMenu(e)}>
+         <button className={`dice big-dice ${(isRolling ? "big-dice--animated" : "")}`} data-number={dice.order} onClick={() => dispatch(removeFromPool(dice.order))} onContextMenu={(e) => onContextMenu(e)}>
             <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                {getForm(getDiceForm(dice.weight))}
 
             </svg>
-            {getImg(dice.value, system?.name)}
+            {getImg(pool[dice.order], systemName)}
          </button>
       )
    }

@@ -8,4 +8,7 @@ footer {
    @include vh(5);
    background-color: $darkGrey;
 
+   @media (max-width:768px) {
+      display: none;
+   }
 }

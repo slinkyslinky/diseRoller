@@ -7,7 +7,7 @@
 
 
    &__item {
-      flex: 1 2 auto;
+      flex: 1 1 15%;
       position: relative;
       display: flex;
       justify-content: center;
@@ -27,7 +27,7 @@
 
    &__item:nth-child(2) {
       flex-direction: column;
-      flex: 5 1 auto;
+      flex: 1 1 70%;
       justify-content: center;
       gap: 5px;
 
@@ -59,6 +59,10 @@
       gap: 20px;
       flex: 1;
       align-items: center;
+
+      @media (max-width: 540px) {
+         gap: 6%;
+      }
    }
 
    &__empty {

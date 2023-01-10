@@ -1,26 +1,22 @@
 import React from 'react'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import ValueField from '../ValueField/ValueField'
 import './SettingsField.scss'
 
-type Props = {
-   listOfSettings?: any,
-   setRollAmount: any,
-   rollAmount: number,
 
-}
 
-export default function SettingsField({ listOfSettings, setRollAmount, rollAmount }: Props) {
+export default function SettingsField() {
+
+   const systemSettings = useAppSelector(state => state.systemReducer.systemData.settings)
 
 
 
    return (
       <div className='settings'>
-         <h4>Settings</h4>
+         <h4 >Settings</h4>
+         <button className='settings__button big-button big-button--settings' >Settings</button>
          <div className="settings__values">
-            {listOfSettings?.map((item: any) => <ValueField type={listOfSettings.type} name={listOfSettings.name} value="" setValue="" />)}
-            {/* <ValueField type="number" name="Success" />
-            <ValueField type="number" name="Advant" /> */}
-            <ValueField type="number" name="Rolls" setValue={setRollAmount} value={rollAmount} />
+            {systemSettings?.map((setting: any) => <ValueField key={setting.name} type={setting.type} name={setting.name} value={setting.value} />)}
          </div>
 
       </div>
