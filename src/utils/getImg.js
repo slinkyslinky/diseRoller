@@ -17,9 +17,6 @@ export function getImg(value, set) {
 
    if (typeof value === 'number') {
       return <div className="dice__number">{value}</div>
-
-
-
    }
 
    return ''
