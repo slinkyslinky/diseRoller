@@ -45,7 +45,6 @@ export default function DiceComponent({ dice, size, onClick, onRightClick, syste
          <button className={`dice big-dice ${(isRolling ? "big-dice--animated" : "")}`} data-number={dice.order} onClick={() => dispatch(removeFromPool(dice.order))} onContextMenu={(e) => onContextMenu(e)}>
             <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                {getForm(getDiceForm(dice.weight))}
-
             </svg>
             {getImg(pool[dice.order], systemName)}
          </button>

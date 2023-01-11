@@ -62,6 +62,11 @@
          overflow-y: auto;
          overflow-x: hidden;
 
+         img {
+            height: 100%;
+            width: 100%;
+         }
+
          @media (max-width: 540px),
          (max-height:445px) {
             padding: 5px 20px;
